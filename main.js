@@ -76,9 +76,18 @@ fetchItems();
 
 function POST(e) {
   e.preventDefault();
-  const newItem = {
-    title: document.getElementById("text").value,
+  let text = document.getElementById("text").value
+  let newItem=null
+  if(text.trim()){
+    newItem = {
+    title: text,
+    time: new Date().toLocaleString(),
   };
+}else{
+        alert("nimadur kirit")
+        return;
+}
+  
   fetch(API_ADD, {
     method: "POST",
     headers: {
@@ -103,9 +112,13 @@ function getData(data) {
     let list = document.createElement("div");
     list.innerHTML = `
         <div class= "list alert alert-primary d-flex justify-content-between align-items-start">
-    
+            <div>
             <div>${value.title}</div>
+            <small class"text-muted>${value.time}</small>
+            </div>
+
             <button onclick="removeItem('${value.id}')" class = "btn btn-danger btn-sm">Remove</button>
+            
         </div>`;
 
     lists.prepend(list);
